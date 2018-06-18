@@ -2,8 +2,7 @@
 
 #include "TankPlayerController.h"
 
-
-
+#define OUT
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
@@ -32,8 +31,58 @@ ATank* ATankPlayerController::GetControlledTank() const
 void ATankPlayerController::AimTowardsCrosshair()
 {
 	if (!GetControlledTank()) { return; }
-	//GetWorld Location through Crosshair.
-	//If it hits the landscape
-		//Tell Controlled Tank to aim at this point
+
+	FVector HitLocation;
+	if (GetSightRayHitLocation(OUT HitLocation)) {
+		//UE_LOG(LogTemp, Warning, TEXT("Hit Location: %s"), *HitLocation.ToString())
+		UE_LOG(LogTemp, Warning, TEXT("Hit Location: %s"), *HitLocation.ToString())
+		//Tell Controller tank to aim at this point.
+	}
+
 }
 
+bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) const
+{
+	
+	// Find Crosshair position in Pixel Coordinates
+	int32 ViewportSizeX, ViewportSizeY;
+	GetViewportSize(OUT ViewportSizeX, OUT ViewportSizeY);
+	FVector2D ScreenLocation = FVector2D(ViewportSizeX * CrossHairXLocation, ViewportSizeY * CrossHairYLocation);
+	
+	// De-project screen position to a world direction
+	FVector LookDirection;
+	if (GetLookDirection(ScreenLocation, OUT LookDirection)) {
+		// line trace along that direction
+		// See what we hit
+		GetLookVectorHitLocation(LookDirection, OUT OutHitLocation);
+	}
+
+	return true;
+}
+
+bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const
+{
+	FVector CameraWorldLocation;
+	return DeprojectScreenPositionToWorld(ScreenLocation.X,
+		ScreenLocation.Y, 
+		OUT CameraWorldLocation,
+		OUT LookDirection);
+}
+bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const
+{
+	FHitResult HitResult;
+	FVector StartLocation = PlayerCameraManager->GetCameraLocation();
+	FVector EndLocation = StartLocation + (LookDirection * LineTraceRange * 100000);
+
+
+	bool isLineTrace = GetWorld()->LineTraceSingleByChannel
+	(
+		HitResult, StartLocation, EndLocation, ECollisionChannel::ECC_Visibility
+	);
+	if (isLineTrace) 
+	{
+		HitLocation = HitResult.Location;
+		return true;
+	}
+	return false;
+}

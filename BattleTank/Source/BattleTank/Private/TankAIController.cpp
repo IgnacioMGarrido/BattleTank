@@ -19,6 +19,17 @@ void ATankAIController::BeginPlay()
 	}
 
 }
+
+void ATankAIController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	if (PlayerTank) 
+	{
+		AimTowardsPlayerTank();
+
+	}
+}
+
 ATank* ATankAIController::GetPlayerTank() const
 {
 	if (!GetWorld()->GetFirstPlayerController()->GetPawn()) { return nullptr; }
@@ -26,9 +37,20 @@ ATank* ATankAIController::GetPlayerTank() const
 	return Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
 }
 
-ATank* ATankAIController::GetControlledTank() const 
+ATank* ATankAIController::GetControlledTank() const
 {
 
 	return Cast<ATank>(GetPawn());
 }
+
+
+void ATankAIController::AimTowardsPlayerTank()
+{
+	if (!GetControlledTank()) { return; }
+
+	FVector HitLocation = PlayerTank->GetActorLocation();
+	GetControlledTank()->AimAt(HitLocation);
+}
+
+
 

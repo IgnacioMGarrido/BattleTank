@@ -13,14 +13,13 @@ ATank* ATankPlayerController::GetControlledTank() const{
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	UE_LOG(LogTemp, Warning, TEXT("Tank PLayer Controlled reporting for Duty!"))
 
 	ControlledTank = GetControlledTank();
 	if (ControlledTank) {
 		UE_LOG(LogTemp, Warning, TEXT("Player Controller Controlling Tank: %s"),*ControlledTank->GetName())
 	}
 	else {
-		UE_LOG(LogTemp, Warning, TEXT("Player Controller Controlling failed to Control Tank. NULL"), *ControlledTank->GetName())
+		UE_LOG(LogTemp, Error, TEXT("Player Controller Controlling failed to Control Tank. NULL"), *ControlledTank->GetName())
 	}
 
 }

@@ -21,6 +21,8 @@ void ATankAIController::BeginPlay()
 }
 ATank* ATankAIController::GetPlayerTank() const
 {
+	if (!GetWorld()->GetFirstPlayerController()->GetPawn()) { return nullptr; }
+
 	return Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
 }
 

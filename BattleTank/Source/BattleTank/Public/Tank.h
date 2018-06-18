@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
+#include "Public/TankAimingComponent.h"
 #include "Tank.generated.h"
 
 UCLASS()
@@ -27,6 +28,9 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void SetBarrelReference(UStaticMeshComponent *BarrelToSet);
+protected:
+	UTankAimingComponent * TankAimingComponent = nullptr;
 	
 };

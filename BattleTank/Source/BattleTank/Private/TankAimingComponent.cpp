@@ -49,7 +49,6 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		FVector AimDirection = OutLaunchVelocity.GetSafeNormal();
 		FString TankName = GetOwner()->GetName();
 		//UE_LOG(LogTemp, Warning, TEXT("%s Aiming at %s"), *TankName, *AimDirection.ToString())
-			//TODO: Rotate Barrel to AimDirection.
 		MoveBarrelTowards(AimDirection);
 	}
 }

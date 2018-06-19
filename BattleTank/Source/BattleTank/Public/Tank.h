@@ -30,13 +30,17 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetBarrelReference(UTankBarrel *BarrelToSet);
+	
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetTurretReference(UTankTurret *TurretToSet);
+	
+	UFUNCTION(BlueprintCallable, Category = Fire)
+	void Fire();
 
 protected:
 	UTankAimingComponent * TankAimingComponent = nullptr;
 	
 private:
 	UPROPERTY(EditAnywhere, Category = Firing)
-	float LaunchVelocity = 10000; //TODO: Find Sensible default
+	float LaunchVelocity = 10000; 
 };

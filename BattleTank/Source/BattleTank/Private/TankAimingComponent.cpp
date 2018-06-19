@@ -50,7 +50,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		0,
 		ESuggestProjVelocityTraceOption::DoNotTrace // Paramater must be present to prevent bug
 	);
-	//UE_LOG(LogTemp, Warning, TEXT("1 - HitLocation: %s"), *HitLocation.ToString())
+	
 
 	if (bHaveAimSolution) {
 		FVector AimDirection = OutLaunchVelocity.GetSafeNormal();

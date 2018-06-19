@@ -41,6 +41,11 @@ void ATank::SetTurretReference(UTankTurret * TurretToSet)
 	TankAimingComponent->SetTurretReference(TurretToSet);
 }
 
+void ATank::SetTrackReference(UTankTracks * RightTrackToSet, UTankTracks * LeftTrackToSet)
+{
+	TankAimingComponent->SetTracksReference(RightTrackToSet, LeftTrackToSet);
+}
+
 void ATank::Fire()
 {
 	//auto time = GetWorld()->GetTimeSeconds();

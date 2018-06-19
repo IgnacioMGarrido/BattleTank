@@ -8,6 +8,7 @@
 
 class UTankBarrel;
 class UTankTurret;
+class UTankTracks;
 class UTankAimingComponent;
 class AProjectile;
 
@@ -35,6 +36,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetTurretReference(UTankTurret *TurretToSet);
 	
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void SetTrackReference(UTankTracks *RightTrackToSet, UTankTracks *LeftTrackToSet);
+	
 	UFUNCTION(BlueprintCallable, Category = Fire)
 	void Fire();
 
@@ -48,7 +52,7 @@ private:
 	UPROPERTY(EditAnywhere, Category = Setup)
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 
-	UPROPERTY(EditAnywhere, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	float ReloadTimeInSeconds = 3;
 	double LastFireTime = 0;
 

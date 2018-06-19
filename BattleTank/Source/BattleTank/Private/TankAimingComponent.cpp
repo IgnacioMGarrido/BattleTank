@@ -26,6 +26,13 @@ void UTankAimingComponent::SetTurretReference(UTankTurret * TurretToSet)
 	if (!ensure(TurretToSet)) { return; }
 	this->Turret = TurretToSet;
 }
+void UTankAimingComponent::SetTracksReference(UTankTracks *RightTrackToSet, UTankTracks *LeftTrackToSet)
+{
+	if (!ensure(RightTrackToSet)) { return; }
+	this->RightTrack = RightTrackToSet;
+	if (!ensure(LeftTrackToSet)) { return; }
+	this->RightTrack = LeftTrackToSet;
+}
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 {
 	if (!ensure(Barrel)) { return; }

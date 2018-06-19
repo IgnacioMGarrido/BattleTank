@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Public/TankAimingComponent.h"
+#include "Public/TankBarrel.h"
 
 
 // Sets default values for this component's properties
@@ -13,7 +14,7 @@ UTankAimingComponent::UTankAimingComponent()
 	// ...
 }
 
-void UTankAimingComponent::AimAt(FVector WorldSpaceAim, float LaunchSpeed)
+void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 {
 	if (!Barrel) { return; }
 
@@ -23,13 +24,14 @@ void UTankAimingComponent::AimAt(FVector WorldSpaceAim, float LaunchSpeed)
 		this,
 		OutLaunchVelocity,
 		StartLocation,
-		WorldSpaceAim,
+		HitLocation,
 		LaunchSpeed,
 		ESuggestProjVelocityTraceOption::DoNotTrace
 	);
+
 	if (bHaveAimSolution) {
-		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
-		auto TankName = GetOwner()->GetName();
+		FVector AimDirection = OutLaunchVelocity.GetSafeNormal();
+		FString TankName = GetOwner()->GetName();
 		UE_LOG(LogTemp, Warning, TEXT("%s Aiming at %s"), *TankName, *AimDirection.ToString())
 			//TODO: Rotate Barrel to AimDirection.
 			MoveBarrelTowards(AimDirection);
@@ -46,8 +48,10 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	//Move Barrel the right amount this frame
 	
 	//given max elevetion speed, and frame time.
+	Barrel->Elevate(5);
+
 }
-void UTankAimingComponent::SetBarrelReference(UStaticMeshComponent * BarrelToSet)
+void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet)
 {
 	this->Barrel = BarrelToSet;
 }

@@ -52,7 +52,7 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	//Move Barrel the right amount this frame
 	
 	//given max elevetion speed, and frame time.
-	Barrel->Elevate(5);
+	Barrel->Elevate(DeltaRotator.Pitch); // TODO: Remove MAgic Number
 
 }
 void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet)

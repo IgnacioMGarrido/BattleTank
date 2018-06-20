@@ -4,18 +4,32 @@
 #include "Public/TankTracks.h"
 
 
+
 void UTankMovementComponent::Initialise(UTankTracks* RightTrackToSet, UTankTracks* LeftTrackToSet) {
-	if (!ensure(RightTrack) || !ensure(LeftTrack)) {
-		LeftTrack = LeftTrackToSet;
-		RightTrack = RightTrackToSet;
-	}
+		
+	LeftTrack = LeftTrackToSet;
+	RightTrack = RightTrackToSet;
+	
 }
 
 void UTankMovementComponent::IntendMovementForward(float Throw)
 {
-	UE_LOG(LogTemp, Warning, TEXT("%s Intend move forward throw: %f"), *GetName(), Throw);
+	if (!ensure(RightTrack) || !ensure(LeftTrack)) { return; }
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(Throw);
+	
+	//TODO: Prevent Double input for double speed
+
+
 }
+
+void UTankMovementComponent::IntendTurnRight(float Throw)
+{
+	if (!ensure(RightTrack) || !ensure(LeftTrack)) { return; }
+	LeftTrack->SetThrottle(Throw);
+	RightTrack->SetThrottle(-Throw);
+	
+}
+
 
 

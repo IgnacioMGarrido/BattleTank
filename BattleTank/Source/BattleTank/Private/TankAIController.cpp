@@ -34,7 +34,7 @@ void ATankAIController::Tick(float DeltaTime)
 	if (PlayerTank) 
 	{
 		AimTowardsPlayerTank();
-		//ControlledTank->Fire(); //TODO: Don't fire every frame
+		ControlledTank->Fire(); //TODO: Don't fire every frame
 	}
 }
 

@@ -7,7 +7,7 @@
 #include "TankMovementComponent.generated.h"
 
 /**
- * 
+ * Responisble for driveing the car.
  */
 class UTankTracks;
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
@@ -18,6 +18,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = Input)
 	void IntendMovementForward(float Throw);
+
+	UFUNCTION(BlueprintCallable, Category = Input)
+	void IntendTurnRight(float Throw);
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void Initialise(UTankTracks* RightTrackToSet, UTankTracks* LeftTrackToSet);

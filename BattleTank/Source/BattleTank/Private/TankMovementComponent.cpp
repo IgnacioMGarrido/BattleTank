@@ -12,6 +12,18 @@ void UTankMovementComponent::Initialise(UTankTracks* RightTrackToSet, UTankTrack
 	
 }
 
+void UTankMovementComponent::RequestDirectMove(const FVector & MoveVelocity, bool bForceMaxSpeed) 
+{
+	//No need to call super
+	auto TankForward = GetOwner()->GetActorForwardVector().GetSafeNormal();
+	auto AIForwardIntention = MoveVelocity.GetSafeNormal();
+
+	float DotProduct = FVector::DotProduct(TankForward, AIForwardIntention);
+	//IntendMovementForward(DotProduct);
+
+
+}
+
 void UTankMovementComponent::IntendMovementForward(float Throw)
 {
 	if (!ensure(RightTrack) || !ensure(LeftTrack)) { return; }

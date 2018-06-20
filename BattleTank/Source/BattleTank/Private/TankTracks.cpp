@@ -4,7 +4,7 @@
 #include "Components/PrimitiveComponent.h"
 void UTankTracks::SetThrottle(float Throttle) {
 
-	UE_LOG(LogTemp, Warning, TEXT("%s throttle: %f"), *GetName(), Throttle);
+	//UE_LOG(LogTemp, Warning, TEXT("%s throttle: %f"), *GetName(), Throttle);
 
 	//TODO: Clamp Throttle value sop the player can tweek theses changes
 	Throttle = FMath::Clamp<float>(Throttle, -1, 1);

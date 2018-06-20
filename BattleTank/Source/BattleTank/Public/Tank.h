@@ -46,8 +46,8 @@ public:
 protected:
 	UTankAimingComponent * TankAimingComponent = nullptr;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Input)
-	UTankMovementComponent * TankMovementComponent = nullptr;
+	//UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Input)
+	//UTankMovementComponent * TankMovementComponent = nullptr;
 private:
 	UPROPERTY(EditAnywhere, Category = Firing)
 	float LaunchSpeed = 10000; 

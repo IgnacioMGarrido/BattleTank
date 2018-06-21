@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright Ignacio Martinez.
 
 #pragma once
 
@@ -18,7 +18,7 @@ class BATTLETANK_API UTankTurret : public UStaticMeshComponent
 public:
 	void Rotate(float RelativeSpeed);
 private:
-	UPROPERTY(EditAnywhere, Category = Setup)
+	UPROPERTY(EditAnywhere, Category = "Setup")
 		float MaxDegreesPerSecond = 25.0f;
 
 	

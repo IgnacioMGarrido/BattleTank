@@ -1,4 +1,5 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright Ignacio Martinez.
+
 #include "Public/Tank.h"
 #include "BattleTank.h"
 #include "Public/Projectile.h"

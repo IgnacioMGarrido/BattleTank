@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright Ignacio Martinez.
 
 #pragma once
 
@@ -31,16 +31,16 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	UFUNCTION(BlueprintCallable, Category = Setup)
+	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void SetBarrelReference(UTankBarrel *BarrelToSet);
 	
-	UFUNCTION(BlueprintCallable, Category = Setup)
+	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void SetTurretReference(UTankTurret *TurretToSet);
 	
-	UFUNCTION(BlueprintCallable, Category = Setup)
+	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void SetTrackReference(UTankTracks *RightTrackToSet, UTankTracks *LeftTrackToSet);
 	
-	UFUNCTION(BlueprintCallable, Category = Fire)
+	UFUNCTION(BlueprintCallable, Category = "Fire")
 	void Fire();
 
 protected:

@@ -1,5 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
+// Copyright Ignacio Martinez.
 #include "Public/TankAIController.h"
 #include "BattleTank.h"
 #include "TankPlayerController.h"
@@ -39,7 +38,8 @@ void ATankAIController::Tick(float DeltaTime)
 		AimTowardsPlayerTank();
 
 		//Fire Shot
-		//ControlledTank->Fire(); //TODO: Don't fire every frame
+		//TODO: Don't fire every frame
+		//ControlledTank->Fire(); 
 	}
 }
 

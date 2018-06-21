@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright Ignacio Martinez.
 
 #include "Public/TankMovementComponent.h"
 #include "Public/TankTracks.h"
@@ -35,9 +35,6 @@ void UTankMovementComponent::IntendMovementForward(float Throw)
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(Throw);
 	
-	//TODO: Prevent Double input for double speed
-
-
 }
 
 void UTankMovementComponent::IntendTurnRight(float Throw)

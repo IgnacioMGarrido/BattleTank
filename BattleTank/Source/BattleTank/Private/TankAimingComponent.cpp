@@ -13,25 +13,12 @@ UTankAimingComponent::UTankAimingComponent()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 
-	// ...
-}
-void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet)
-{
-	if (!ensure(BarrelToSet)) { return; }
-	this->Barrel = BarrelToSet;
 }
 
-void UTankAimingComponent::SetTurretReference(UTankTurret * TurretToSet)
+void UTankAimingComponent::Initialise(UTankBarrel * BarrelToSet, UTankTurret * TurretToSet)
 {
-	if (!ensure(TurretToSet)) { return; }
+	this->Barrel = BarrelToSet;
 	this->Turret = TurretToSet;
-}
-void UTankAimingComponent::SetTracksReference(UTankTracks *RightTrackToSet, UTankTracks *LeftTrackToSet)
-{
-	if (!ensure(RightTrackToSet)) { return; }
-	this->RightTrack = RightTrackToSet;
-	if (!ensure(LeftTrackToSet)) { return; }
-	this->RightTrack = LeftTrackToSet;
 }
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 {
@@ -55,17 +42,17 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 	if (bHaveAimSolution) {
 		FVector AimDirection = OutLaunchVelocity.GetSafeNormal();
 		FString TankName = GetOwner()->GetName();
-		//UE_LOG(LogTemp, Warning, TEXT("%s Aiming at %s"), *TankName, *AimDirection.ToString())
 		MoveBarrelTowards(AimDirection);
 	}
 }
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 {
+	if (!ensure(Barrel) || !ensure(Turret)) { return; }
+	
 	//Work pout difference between current barrel rotation and aim Direction
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
-	//UE_LOG(LogTemp, Warning, TEXT("Aim As rotator: %s"), *DeltaRotator.ToString())
 	
 	//Move Barrel the right amount this frame
 	//given max elevetion speed, and frame time.

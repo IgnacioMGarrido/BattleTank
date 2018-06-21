@@ -17,7 +17,7 @@ class BATTLETANK_API UTankTracks : public UStaticMeshComponent
 	
 public:
 	///Set Throttle between -1 and +1
-	UFUNCTION(BlueprintCallable, Category = Fire)
+	UFUNCTION(BlueprintCallable, Category = "Fire")
 	void SetThrottle(float Throttle);
 	
 	//This is max Force per track.

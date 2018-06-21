@@ -7,8 +7,6 @@
 #include "Tank.generated.h"
 
 class UTankBarrel;
-class UTankBarrel;
-class UTankAimingComponent;
 class AProjectile;
 
 UCLASS()
@@ -19,19 +17,14 @@ class BATTLETANK_API ATank : public APawn
 public:
 	// Sets default values for this pawn's properties
 	ATank();
-	void AimAt(FVector HitLocation);
 
+	//TODO: Put this into AimingComponent instead of the tank
 	UFUNCTION(BlueprintCallable, Category = "Fire")
 	void Fire();
 
 protected:
 	virtual void BeginPlay() override;
 
-	UPROPERTY(BlueprintReadOnly)
-	UTankAimingComponent * TankAimingComponent = nullptr;
-
-	//UPROPERTY(BlueprintReadOnly)
-	//UTankMovementComponent * TankMovementComponent = nullptr;
 private:
 	UPROPERTY(EditAnywhere, Category = "Firing")
 	float LaunchSpeed = 10000; 

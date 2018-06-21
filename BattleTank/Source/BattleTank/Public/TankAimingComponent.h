@@ -29,7 +29,7 @@ class BATTLETANK_API UTankAimingComponent : public UActorComponent
 
 public:	
 
-	void AimAt(FVector WorldSpaceAim, float LaunchSpeed);
+	void AimAt(FVector HitLocation);
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void Initialise(UTankBarrel *BarrelToSet, UTankTurret *TurretToSet);
 
@@ -46,4 +46,6 @@ private:
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringState FiringState = EFiringState::Locked;
+	UPROPERTY(EditAnywhere, Category = "Firing")
+	float LaunchSpeed = 10000;
 };

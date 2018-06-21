@@ -10,7 +10,6 @@
 /**
  * Responsible for helping the player aim.
  */
-class ATank;
 class UTankAimingComponent;
 UCLASS()
 class BATTLETANK_API ATankPlayerController : public APlayerController
@@ -21,9 +20,6 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 protected:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
-
-	UFUNCTION(BlueprintCallable, Category="Setup")
-	ATank* GetControlledTank() const;
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
 	void FoundAimingComponent(UTankAimingComponent* AimCompRef);
@@ -39,12 +35,10 @@ private:
 
 
 private:
-	ATank* ControlledTank;
 	UPROPERTY(EditAnywhere)
 	float CrossHairXLocation = .5f;
 	UPROPERTY(EditAnywhere)
 	float CrossHairYLocation = .33333f;
 	UPROPERTY(EditAnywhere)
 	float LineTraceRange = 1000000;
-
 };

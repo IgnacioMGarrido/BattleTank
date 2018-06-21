@@ -2,34 +2,26 @@
 #include "Public/TankAIController.h"
 #include "BattleTank.h"
 #include "TankPlayerController.h"
-#include "Public/Tank.h"
+#include "Public/TankAimingComponent.h"
 
 
 void ATankAIController::BeginPlay()
 {
 	Super::BeginPlay();
-	InitVariables();
-
-
-}
-void ATankAIController::InitVariables()
-{
-
-	ControlledTank = Cast<ATank>(GetPawn());;
-
-	if (!GetWorld()->GetFirstPlayerController()->GetPawn()) { PlayerTank = nullptr; }
-		PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
 }
 
 void ATankAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	auto PlayerTank = GetWorld()->GetFirstPlayerController()->GetPawn();
+	if (!ensure(PlayerTank)) { return; }
 	if (PlayerTank) 
 	{
 		//Move Towards Player
 		MoveToActor(PlayerTank, AcceptanceRadius); // TODO: Check radius is in cm.
 		//Aim Towards Player
-		AimTowardsPlayerTank();
+		AimTowardsPlayerTank(PlayerTank);
 
 		//Fire Shot
 		//TODO: Don't fire every frame
@@ -38,12 +30,16 @@ void ATankAIController::Tick(float DeltaTime)
 }
 
 
-void ATankAIController::AimTowardsPlayerTank()
+void ATankAIController::AimTowardsPlayerTank(APawn* PlayerTank)
 {
-	if (!ensure(PlayerTank)) { return; }
+
+
+	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+	if (!ensure(AimingComponent)) { return; }
 
 	FVector HitLocation = PlayerTank->GetActorLocation();
-	ControlledTank->AimAt(HitLocation);
+	AimingComponent->AimAt(HitLocation);
+
 }
 
 

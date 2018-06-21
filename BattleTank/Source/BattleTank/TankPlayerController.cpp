@@ -2,16 +2,14 @@
 #include "TankPlayerController.h"
 #include "BattleTank.h"
 #include "Public/TankAimingComponent.h"
-#include "Public/Tank.h"
 
 
 #define OUT
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	ControlledTank = GetControlledTank();
-	auto AimingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
-	
+
+	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 	if (!ensure(AimingComponent)) { return; }
 	FoundAimingComponent(AimingComponent);
 }
@@ -21,20 +19,17 @@ void ATankPlayerController::Tick(float DeltaTime)
 
 	AimTowardsCrosshair();
 }
-ATank* ATankPlayerController::GetControlledTank() const
-{
 
-	return Cast<ATank>(GetPawn());
-}
 
 void ATankPlayerController::AimTowardsCrosshair()
 {
-	if (!ensure(GetControlledTank())) { return; }
+	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+	if (!ensure(AimingComponent)) { return; }
 
 	FVector HitLocation;
 	if (GetSightRayHitLocation(OUT HitLocation)) {
 		//Tell Controller tank to aim at this point.
-		GetControlledTank()->AimAt(HitLocation);
+		AimingComponent->AimAt(HitLocation);
 	}
 
 }

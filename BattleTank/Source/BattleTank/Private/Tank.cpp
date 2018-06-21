@@ -4,7 +4,6 @@
 #include "BattleTank.h"
 #include "Public/Projectile.h"
 #include "Public/TankBarrel.h"
-#include "Public/TankAimingComponent.h"
 
 
 
@@ -17,7 +16,6 @@ ATank::ATank()
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();
-	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
 }
 void ATank::Fire()
 {
@@ -32,10 +30,4 @@ void ATank::Fire()
 
 }
 
-
-void ATank::AimAt(FVector HitLocation)
-{
-	if (!ensure(TankAimingComponent)) { return; }
-	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
-}
 

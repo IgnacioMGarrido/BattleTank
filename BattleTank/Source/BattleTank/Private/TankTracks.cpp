@@ -4,8 +4,6 @@
 #include "Components/PrimitiveComponent.h"
 void UTankTracks::SetThrottle(float Throttle) {
 
-	//UE_LOG(LogTemp, Warning, TEXT("%s throttle: %f"), *GetName(), Throttle);
-
 	Throttle = FMath::Clamp<float>(Throttle, -1, 1);
 
 	auto ForceApplied = GetForwardVector() * Throttle * TrackMaxDrivingForce;

@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 #include "TankPlayerController.h"
 #include "BattleTank.h"
+#include "Public/TankAimingComponent.h"
 #include "Public/Tank.h"
 
 
@@ -8,15 +9,11 @@
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-
 	ControlledTank = GetControlledTank();
-	if (ControlledTank) {
-		UE_LOG(LogTemp, Warning, TEXT("Player Controller Controlling Tank: %s"),*ControlledTank->GetName())
-	}
-	else {
-		UE_LOG(LogTemp, Error, TEXT("Player Controller Controlling failed to Control Tank. NULL"), *ControlledTank->GetName())
-	}
-
+	auto AimingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
+	
+	if (!ensure(AimingComponent)) { return; }
+	FoundAimingComponent(AimingComponent);
 }
 void ATankPlayerController::Tick(float DeltaTime)
 {
@@ -36,7 +33,6 @@ void ATankPlayerController::AimTowardsCrosshair()
 
 	FVector HitLocation;
 	if (GetSightRayHitLocation(OUT HitLocation)) {
-		//UE_LOG(LogTemp, Warning, TEXT("Hit Location: %s"), *HitLocation.ToString())
 		//Tell Controller tank to aim at this point.
 		GetControlledTank()->AimAt(HitLocation);
 	}

@@ -33,15 +33,11 @@ void UTankTracks::ApplySidewaysForce()
 
 void UTankTracks::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
 {
-	UE_LOG(LogTemp, Warning, TEXT("I'm hit, I'm hit!"))
-	
 	//Drive the tracks
 	DriveTrack();
 	//Apply sideways force
 	ApplySidewaysForce();
 	CurrentThrottle = 0;
-
-
 }
 
 void UTankTracks::SetThrottle(float Throttle) 

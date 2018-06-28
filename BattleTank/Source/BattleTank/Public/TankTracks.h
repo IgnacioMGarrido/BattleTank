@@ -13,8 +13,10 @@ UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class BATTLETANK_API UTankTracks : public UStaticMeshComponent
 {
 	GENERATED_BODY()
-	
-	
+private:
+	UTankTracks();
+	virtual void BeginPlay();
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction) override;
 public:
 	///Set Throttle between -1 and +1
 	UFUNCTION(BlueprintCallable, Category = "Fire")

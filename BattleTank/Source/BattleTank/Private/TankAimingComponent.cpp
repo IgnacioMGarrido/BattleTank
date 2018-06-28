@@ -25,11 +25,19 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 	//UE_LOG(LogTemp, Warning, TEXT("Aiming Component Ticking"))
 	//bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
-	if ((FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds) 
+	if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds) 
 	{
 		FiringState = EFiringState::Reloading;
 	}
 	//TODO: Handling Lock and aiming States.
+	else if (IsBarrelStateMoving()) 
+	{
+		FiringState = EFiringState::Aming;
+	}
+	else 
+	{
+		FiringState = EFiringState::Locked;
+	}
 }
 
 void UTankAimingComponent::Initialise(UTankBarrel * BarrelToSet, UTankTurret * TurretToSet)
@@ -71,7 +79,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation)
 	
 
 	if (bHaveAimSolution) {
-		FVector AimDirection = OutLaunchVelocity.GetSafeNormal();
+		AimDirection = OutLaunchVelocity.GetSafeNormal();
 		FString TankName = GetOwner()->GetName();
 		MoveBarrelTowards(AimDirection);
 	}
@@ -90,6 +98,13 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	Barrel->Elevate(DeltaRotator.Pitch);
 	Turret->Rotate(DeltaRotator.Yaw);
 
+}
+
+bool UTankAimingComponent::IsBarrelStateMoving() const
+{
+
+	if (!ensure(Barrel)) { return false; }
+	return !Barrel->GetForwardVector().Equals(AimDirection, 0.01f);
 }
 
 

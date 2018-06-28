@@ -45,11 +45,11 @@ private:
 
 	UTankAimingComponent();
 	void MoveBarrelTowards(FVector AimDirection);
-
+	bool IsBarrelStateMoving() const;
 private:
 	UTankBarrel *Barrel = nullptr;
 	UTankTurret *Turret = nullptr;
-
+	FVector AimDirection;
 
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")

@@ -26,7 +26,8 @@ void ATankAIController::Tick(float DeltaTime)
 		//Fire Shot
 		//TODO: Fix firing
 		auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
-		AimingComponent->Fire();
+		if(AimingComponent->GetFiringState() == EFiringState::Locked)
+			AimingComponent->Fire();
 	}
 }
 

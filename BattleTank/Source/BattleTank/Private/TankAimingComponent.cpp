@@ -17,6 +17,7 @@ UTankAimingComponent::UTankAimingComponent()
 
 }
 void UTankAimingComponent::BeginPlay() {
+	
 	LastFireTime = FPlatformTime::Seconds();
 
 }
@@ -29,7 +30,6 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	{
 		FiringState = EFiringState::Reloading;
 	}
-	//TODO: Handling Lock and aiming States.
 	else if (IsBarrelStateMoving()) 
 	{
 		FiringState = EFiringState::Aming;
@@ -44,6 +44,11 @@ void UTankAimingComponent::Initialise(UTankBarrel * BarrelToSet, UTankTurret * T
 {
 	this->Barrel = BarrelToSet;
 	this->Turret = TurretToSet;
+}
+
+EFiringState UTankAimingComponent::GetFiringState() const
+{
+	return FiringState;
 }
 
 void UTankAimingComponent::Fire()

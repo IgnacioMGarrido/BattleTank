@@ -40,6 +40,9 @@ public:
 
 private:	
 	// Sets default values for this component's properties
+	virtual void BeginPlay() override;
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
+
 	UTankAimingComponent();
 	void MoveBarrelTowards(FVector AimDirection);
 
@@ -50,7 +53,7 @@ private:
 
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
-	EFiringState FiringState = EFiringState::Locked;
+	EFiringState FiringState = EFiringState::Reloading;
 	
 	UPROPERTY(EditAnywhere, Category = "Firing")
 	float LaunchSpeed = 10000;

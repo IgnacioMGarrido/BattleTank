@@ -24,7 +24,7 @@ void ATankAIController::Tick(float DeltaTime)
 		AimTowardsPlayerTank(PlayerTank);
 
 		//Fire Shot
-		//TODO: Don't fire every frame
+		//TODO: Fix firing
 		//ControlledTank->Fire(); 
 	}
 }
@@ -32,8 +32,6 @@ void ATankAIController::Tick(float DeltaTime)
 
 void ATankAIController::AimTowardsPlayerTank(APawn* PlayerTank)
 {
-
-
 	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 	if (!ensure(AimingComponent)) { return; }
 

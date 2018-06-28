@@ -6,10 +6,12 @@
 UTankTracks::UTankTracks() 
 {
 	PrimaryComponentTick.bCanEverTick = true;
+
 }
 void UTankTracks::BeginPlay()
 {
 	Super::BeginPlay();
+	OnComponentHit.AddDynamic(this, &UTankTracks::OnHit);
 }
 
 void UTankTracks::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction)
@@ -25,8 +27,12 @@ void UTankTracks::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 	//Claculate and apply sideways force (F = m * a)
 	auto TankRoot = Cast<UStaticMeshComponent>(GetOwner()->GetRootComponent());
 	auto CorrectionForce = (TankRoot->GetMass() * CorrectionAcceleration) / 2;
-	UE_LOG(LogTemp, Warning, TEXT("Correction Force is: %d"), *CorrectionForce.ToString())
 	TankRoot->AddForce(CorrectionForce);
+}
+
+void UTankTracks::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
+{
+	UE_LOG(LogTemp, Warning, TEXT("I'm hit, I'm hit!"))
 }
 
 void UTankTracks::SetThrottle(float Throttle) 

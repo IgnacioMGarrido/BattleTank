@@ -17,7 +17,11 @@ private:
 	UTankTracks();
 	virtual void BeginPlay();
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction) override;
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
 public:
+
+
 	///Set Throttle between -1 and +1
 	UFUNCTION(BlueprintCallable, Category = "Fire")
 	void SetThrottle(float Throttle);

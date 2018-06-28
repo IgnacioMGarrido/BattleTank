@@ -40,7 +40,7 @@ public:
 	void Initialise(UTankBarrel *BarrelToSet, UTankTurret *TurretToSet);
 	
 	UFUNCTION(BlueprintCallable, Category = "Setup")
-	int GetRemainingAmmo() const;
+	int32 GetRemainingAmmo() const;
 
 	EFiringState GetFiringState() const;
 
@@ -72,5 +72,5 @@ protected:
 	double LastFireTime = 0;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-	int RemainingAmmo = 3;
+	int32 RemainingAmmo = 3;
 };

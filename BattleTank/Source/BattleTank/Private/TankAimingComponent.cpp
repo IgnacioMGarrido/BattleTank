@@ -51,7 +51,7 @@ void UTankAimingComponent::Initialise(UTankBarrel * BarrelToSet, UTankTurret * T
 	this->Turret = TurretToSet;
 }
 
-int UTankAimingComponent::GetRemainingAmmo() const
+int32 UTankAimingComponent::GetRemainingAmmo() const
 {
 	return RemainingAmmo;
 }

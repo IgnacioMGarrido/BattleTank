@@ -16,7 +16,8 @@ enum class EFiringState : uint8
 {
 	Reloading,
 	Aming,
-	Locked
+	Locked,
+	OutOfAmmo
 };
 
 class UTankBarrel; //Forward Declaration
@@ -37,6 +38,10 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void Initialise(UTankBarrel *BarrelToSet, UTankTurret *TurretToSet);
+	
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+	int GetRemainingAmmo() const;
+
 	EFiringState GetFiringState() const;
 
 private:	
@@ -65,4 +70,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	float ReloadTimeInSeconds = 3;
 	double LastFireTime = 0;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	int RemainingAmmo = 3;
 };

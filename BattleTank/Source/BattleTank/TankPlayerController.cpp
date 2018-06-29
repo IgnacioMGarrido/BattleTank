@@ -73,7 +73,7 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVec
 
 	bool isLineTrace = GetWorld()->LineTraceSingleByChannel
 	(
-		HitResult, StartLocation, EndLocation, ECollisionChannel::ECC_Visibility
+		HitResult, StartLocation, EndLocation, ECollisionChannel::ECC_Camera
 	);
 	if (isLineTrace) 
 	{

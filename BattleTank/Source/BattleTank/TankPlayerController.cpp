@@ -11,6 +11,8 @@ void ATankPlayerController::BeginPlay()
 	Super::BeginPlay();
 
 	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+	DeathFire = GetPawn()->FindComponentByClass<UParticleSystemComponent>();
+
 	if (!ensure(AimingComponent)) { return; }
 	FoundAimingComponent(AimingComponent);
 }
@@ -24,7 +26,7 @@ void ATankPlayerController::Tick(float DeltaTime)
 
 void ATankPlayerController::AimTowardsCrosshair()
 {
-	if (!ensure(GetPawn())) { return; }
+	if (!GetPawn()) { return; }
 	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 	if (!ensure(AimingComponent)) { return; }
 
@@ -99,4 +101,7 @@ void ATankPlayerController::SetPawn(APawn * InPawn)
 void ATankPlayerController::OnTankDeath()
 {
 	StartSpectatingOnly();
+	if (!DeathFire) { return;  }//TODO: Move this to the Tank.cpp file
+	DeathFire->Activate(); 
+	
 }

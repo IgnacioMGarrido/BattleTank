@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "AIController.h"
 #include "Engine/World.h"
+#include "Particles/ParticleSystemComponent.h"
+
 #include "TankAIController.generated.h"
 
 
@@ -30,4 +32,6 @@ private:
 	UFUNCTION()
 	void OnTankDeath();
 
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UParticleSystemComponent* DeathFire = nullptr;
 };

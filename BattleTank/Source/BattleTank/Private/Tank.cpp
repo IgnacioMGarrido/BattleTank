@@ -1,6 +1,8 @@
 // Copyright Ignacio Martinez.
 
 #include "Public/Tank.h"
+#include "Particles/ParticleSystemComponent.h"
+
 #include "BattleTank.h"
 
 
@@ -10,6 +12,8 @@ ATank::ATank()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
+
+	//DeathFire->bAutoActivate = false;
 }
 void ATank::BeginPlay() {
 	Super::BeginPlay();
@@ -24,6 +28,7 @@ float ATank::TakeDamage(float DamageAmount, FDamageEvent const &DamageEvent, ACo
 	CurrentHealth -= DamageToApply;
 	if (CurrentHealth <= 0) {
 		//UE_LOG(LogTemp, Warning, TEXT("Tank DIED!"))
+		//DeathFire->Activate();
 		OnDeath.Broadcast();
 	}
 	return DamageToApply;

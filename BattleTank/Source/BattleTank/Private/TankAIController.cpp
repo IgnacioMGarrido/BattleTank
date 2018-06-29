@@ -9,6 +9,8 @@
 void ATankAIController::BeginPlay()
 {
 	Super::BeginPlay();
+	DeathFire = GetPawn()->FindComponentByClass<UParticleSystemComponent>();
+
 }
 
 void ATankAIController::Tick(float DeltaTime)
@@ -17,7 +19,7 @@ void ATankAIController::Tick(float DeltaTime)
 
 
 	auto PlayerTank = GetWorld()->GetFirstPlayerController()->GetPawn();
-	if (!ensure(PlayerTank && GetPawn())) { return; }
+	if (!PlayerTank && !GetPawn()) { return; }
 	if (PlayerTank) 
 	{
 		//Move Towards Player
@@ -57,7 +59,9 @@ void ATankAIController::SetPawn(APawn * InPawn)
 }
 void ATankAIController::OnTankDeath()
 {
-	if (!ensure(GetPawn())) { return; } //TODO: Remove if ok
+	if (!GetPawn()) { return; } 
+	if (!DeathFire) { return; }//TODO: Move this to the Tank.cpp file
+	DeathFire->Activate();
 	GetPawn()->DetachFromControllerPendingDestroy();
 }
 

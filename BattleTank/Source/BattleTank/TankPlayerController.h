@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
 #include "Engine/World.h"
+#include "Particles/ParticleSystemComponent.h"
 #include "TankPlayerController.generated.h"
 
 /**
@@ -44,4 +45,6 @@ private:
 	float CrossHairYLocation = .33333f;
 	UPROPERTY(EditAnywhere)
 	float LineTraceRange = 1000000;
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UParticleSystemComponent* DeathFire = nullptr;
 };

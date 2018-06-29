@@ -2,6 +2,7 @@
 
 #include "Public/Projectile.h"
 #include "Engine/World.h"
+#include "Public/TimerManager.h"
 
 // Sets default values
 AProjectile::AProjectile()
@@ -22,9 +23,12 @@ AProjectile::AProjectile()
 	ImpactBlast->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	ImpactBlast->bAutoActivate = false;
 
+	ExplosionForce = CreateDefaultSubobject<URadialForceComponent>(FName("Explosion Force"));
+	ExplosionForce->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+	ExplosionForce->bAutoActivate = true;
 
-	MovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(FName("Movement Component"));
-	MovementComponent->bAutoActivate = false;
+	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(FName("Movement Component"));
+	ProjectileMovement->bAutoActivate = false;
 
 }
 
@@ -40,6 +44,17 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, U
 {
 	LaunchBlast->Deactivate();
 	ImpactBlast->Activate();
+	ExplosionForce->FireImpulse();
+	SetRootComponent(ImpactBlast);
+	CollisionMesh->DestroyComponent();
+
+	FTimerHandle TimerHandle;
+	FTimerDynamicDelegate bTimerDynamicDelegate;
+	GetWorld()->GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &AProjectile::OnTimerExpire, DestroyDelay, false);
+}
+
+void AProjectile::OnTimerExpire() {
+	Destroy();
 }
 
 void AProjectile::LaunchProjectile(float LaunchSpeed)
@@ -47,6 +62,6 @@ void AProjectile::LaunchProjectile(float LaunchSpeed)
 	auto time = GetWorld()->GetTimeSeconds();
 
 
-	MovementComponent->SetVelocityInLocalSpace(FVector::ForwardVector * LaunchSpeed);
-	MovementComponent->Activate();
+	ProjectileMovement->SetVelocityInLocalSpace(FVector::ForwardVector * LaunchSpeed);
+	ProjectileMovement->Activate();
 }

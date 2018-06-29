@@ -2,6 +2,7 @@
 #include "Public/TankAIController.h"
 #include "BattleTank.h"
 #include "TankPlayerController.h"
+#include "Public/Tank.h"
 #include "Public/TankAimingComponent.h"
 
 
@@ -42,6 +43,22 @@ void ATankAIController::AimTowardsPlayerTank(APawn* PlayerTank)
 
 }
 
+void ATankAIController::SetPawn(APawn * InPawn)
+{
+	Super::SetPawn(InPawn);
+	if (InPawn) 
+	{
+		auto PossessedTank = Cast<ATank>(InPawn);
+		if (!ensure(PossessedTank)) { return; }
+		// Subscribe our local method to the tanks Death event
+		PossessedTank->OnDeath.AddUniqueDynamic(this, &ATankAIController::OnTankDeath);
+	}
+}
+void ATankAIController::OnTankDeath()
+{
+	if (!ensure(GetPawn())) { return; } //TODO: Remove if ok
+	GetPawn()->DetachFromControllerPendingDestroy();
+}
 
 
 

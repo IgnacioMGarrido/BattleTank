@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 #include "TankPlayerController.h"
 #include "BattleTank.h"
+#include "Public/Tank.h"
 #include "Public/TankAimingComponent.h"
 
 
@@ -23,6 +24,7 @@ void ATankPlayerController::Tick(float DeltaTime)
 
 void ATankPlayerController::AimTowardsCrosshair()
 {
+	if (!ensure(GetPawn())) { return; }
 	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 	if (!ensure(AimingComponent)) { return; }
 
@@ -79,4 +81,22 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVec
 		return true;
 	}
 	return false;
+}
+
+void ATankPlayerController::SetPawn(APawn * InPawn)
+{
+	Super::SetPawn(InPawn);
+	if (InPawn)
+	{
+		auto PossessedTank = Cast<ATank>(InPawn);
+		if (!ensure(PossessedTank)) { return; }
+		// Subscribe our local method to the tanks Death event
+		PossessedTank->OnDeath.AddUniqueDynamic(this, &ATankPlayerController::OnTankDeath);
+
+	}
+}
+
+void ATankPlayerController::OnTankDeath()
+{
+	StartSpectatingOnly();
 }

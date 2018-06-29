@@ -25,5 +25,9 @@ protected:
 private:
 	void AimTowardsPlayerTank(APawn* PlayerTank);
 	
+	virtual void SetPawn(APawn* InPawn) override;
+	
+	UFUNCTION()
+	void OnTankDeath();
 
 };

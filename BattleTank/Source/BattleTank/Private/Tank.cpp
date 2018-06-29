@@ -3,6 +3,8 @@
 #include "Public/Tank.h"
 #include "BattleTank.h"
 
+
+
 // Sets default values
 ATank::ATank()
 {
@@ -21,4 +23,8 @@ float ATank::TakeDamage(float DamageAmount, FDamageEvent const &DamageEvent, ACo
 		UE_LOG(LogTemp, Warning, TEXT("Tank DIED!"))
 	}
 	return DamageToApply;
+}
+float ATank::GetHealthPercent() const
+{
+	return (float)CurrentHealth / (float)StartingHealth;
 }
